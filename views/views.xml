@@ -1,0 +1,14 @@
+<odoo>
+  <data>
+    <record id="form_mail_compose_message_scheduler" model="ir.ui.view">
+      <field name="name">form.mail.compose.message</field>
+      <field name="model">mail.compose.message</field>
+      <field name="inherit_id" ref="mail.email_compose_message_wizard_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='subject']" position="after">
+          <field name="scheduled_date"/>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>
