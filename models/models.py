@@ -126,11 +126,6 @@ class ScheduleEmailSending(models.TransientModel):
                                     'nextcall': self.scheduled_date,
                                     "doall": False,
                                 })
-                                # self.env[active_model].browse(res_id).message_post(**public_data)
-                                print(self.scheduled_date)
-                                print(self.scheduled_date)
-                                print(self.scheduled_date)
-                                print(self.scheduled_date)
                             else:
                                 
                                 ActiveModel.browse(res_id).message_post(**post_params)
@@ -139,14 +134,6 @@ class ScheduleEmailSending(models.TransientModel):
                     batch_mails_sudo.send(auto_commit=auto_commit)
 
     def _testing_email(self, res_id=False):
-        # print(public_data)
-        # print(active_model)
-        # print(res_id)
         self.env[active_model].browse(res_id).message_post(**public_data)
-        # parent_id = post_params.pop('parent_id')
-        # dkdkdk = self.env[active_model].browse(res_id)
-        # print(dkdkdk)
-        # print(dkdkdk.name)
 
-        # ActiveModel.browse(res_id).message_post(**post_params)
         
