@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from turtle import pos
 from odoo import models, fields, api
+public_data = dict()
+active_model = ''
 class ScheduleEmailSending(models.TransientModel):
     # _name = 'mail.compose.message'
     _inherit = 'mail.compose.message'
@@ -104,7 +107,12 @@ class ScheduleEmailSending(models.TransientModel):
                             print(res_id)
                             print(ActiveModel._name)
                             print(post_params)
-                            del post_params['parent_id']
+                            # print(**post_params)
+                            global active_model
+                            active_model = str(ActiveModel._name)
+                            # post_params['parent_id'] = str(post_params['parent_id'])
+                            global public_data
+                            public_data = post_params
                             if self.scheduled_date:
                                 self.env['ir.cron'].sudo().create({
                                     'name': 'Send Email by sales',
@@ -114,24 +122,31 @@ class ScheduleEmailSending(models.TransientModel):
                                     'active': True,
                                     'interval_type': 'minutes',
                                     "state": "code",
-                                    'code': f'model._testing_email({res_id}, {str(post_params)})',
+                                    'code': f'model._testing_email({res_id})',
                                     'nextcall': self.scheduled_date,
                                     "doall": False,
                                 })
-                                
+                                # self.env[active_model].browse(res_id).message_post(**public_data)
+                                print(self.scheduled_date)
+                                print(self.scheduled_date)
+                                print(self.scheduled_date)
+                                print(self.scheduled_date)
                             else:
+                                
                                 ActiveModel.browse(res_id).message_post(**post_params)
 
                 if wizard.composition_mode == 'mass_mail':
                     batch_mails_sudo.send(auto_commit=auto_commit)
 
-    def _testing_email(self, args=False, body=False):
-        print(args)
-        print(args)
-        print(args)
-        print(self)
-        print(self)
-        print(self)
-        print(body)
-        print(body)
+    def _testing_email(self, res_id=False):
+        # print(public_data)
+        # print(active_model)
+        # print(res_id)
+        self.env[active_model].browse(res_id).message_post(**public_data)
+        # parent_id = post_params.pop('parent_id')
+        # dkdkdk = self.env[active_model].browse(res_id)
+        # print(dkdkdk)
+        # print(dkdkdk.name)
+
+        # ActiveModel.browse(res_id).message_post(**post_params)
         
