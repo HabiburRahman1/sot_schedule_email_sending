@@ -117,7 +117,7 @@ class ScheduleEmailSending(models.TransientModel):
                                 self.env['ir.cron'].sudo().create({
                                     'name': 'Send Email by sales',
                                     'model_id': self.env["ir.model"].sudo().search([("model", "=", "mail.compose.message")]).id,
-                                    'numbercall': 6,
+                                    'numbercall': 1,
                                     'interval_number': 1,
                                     'active': True,
                                     'interval_type': 'minutes',
@@ -127,7 +127,6 @@ class ScheduleEmailSending(models.TransientModel):
                                     "doall": False,
                                 })
                             else:
-                                
                                 ActiveModel.browse(res_id).message_post(**post_params)
 
                 if wizard.composition_mode == 'mass_mail':
